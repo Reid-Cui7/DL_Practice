@@ -46,6 +46,11 @@ if __name__ == "__main__":
     time_dif = get_time_dif(start_time)
     print("Time usage:", time_dif)
 
+    # train
+    config.n_vocab = len(vocab)
+    model = x.Model(config).to(config.device)
+
+
 
 
 

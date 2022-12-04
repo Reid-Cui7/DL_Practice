@@ -49,7 +49,7 @@ def build_dataset(config, use_word):
                     continue
                 content, label = lin.split('\t')
                 words_line = []
-                token =- tokenizer(content)
+                token = tokenizer(content)
                 seq_len = len(token)
                 if pad_size:
                     if seq_len < pad_size:
@@ -83,11 +83,11 @@ class DatasetIterater:
         self.device = device
 
     def _to_tensor(self, datas):
-        x = torch.LongTensor(_[0] for _ in datas).to(self.device)
-        y = torch.LongTensor(_[1] for _ in datas).to(self.device)
+        x = torch.LongTensor([_[0] for _ in datas]).to(self.device)
+        y = torch.LongTensor([_[1] for _ in datas]).to(self.device)
 
         # pad前的长度(超过pad_size的设为pad_size)
-        seq_len = torch.LongTensor(_[2] for _ in datas).to(self.device)
+        seq_len = torch.LongTensor([_[2] for _ in datas]).to(self.device)
 
         return (x, seq_len), y
 
@@ -117,14 +117,14 @@ class DatasetIterater:
             return self.n_batches
 
 
-def build_iter(dataset, config):
+def build_iterator(dataset, config):
     iter = DatasetIterater(dataset, config.batch_size, config.device)
     return iter
 
 def get_time_dif(start_time):
     end_time = time.time()
     time_dif = end_time - start_time
-    return timedelta(seconds-int(round(time_dif)))
+    return timedelta(seconds=int(round(time_dif)))
 
 
 

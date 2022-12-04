@@ -2,8 +2,9 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import sklearn import metrics
+from sklearn import metrics
 import time
+import os
 from utils import get_time_dif
 from tensorboardX import SummaryWriter
 
@@ -33,7 +34,7 @@ def train(config, model, train_iter, dev_iter, test_iter, writer):
     total_batch = 0 # 记录进行到多少batch
     dev_best_loss = float('inf')
     last_improve = 0 # 记录上次验证集loss下降的batch数
-    falg = False # 记录是否很久没有效果提升
+    flag = False # 记录是否很久没有效果提升
     writer = SummaryWriter(log_dir=config.log_path + '/' + time.strftime('%m-%d_%H.%M', time.localtime()))
 
     for epoch in range(config.num_epochs):
@@ -52,7 +53,7 @@ def train(config, model, train_iter, dev_iter, test_iter, writer):
                 dev_acc, dev_loss = evaluate(config, model, dev_iter)
                 if dev_loss < dev_best_loss:
                     dev_best_loss = dev_loss
-                    torch.save(model.state_dict(), config.save_path)
+                    torch.save(model.state_dict(), os.path.join(".", config.save_path))
                     improve = '*'
                     last_improve = total_batch
                 else:

@@ -1,0 +1,6 @@
+
+def init_network():
+    ...
+
+def train():
+    ...

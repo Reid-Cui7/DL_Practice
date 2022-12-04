@@ -100,7 +100,7 @@ def evaluate(config, model, data_iter, test=False):
     return acc, loss_total / len(data_iter)
 
 
-def test(confg, model, test_iter):
+def test(config, model, test_iter):
     # test
     model.load_state_dict(torch.load(config.save_path))
     model.eval()
